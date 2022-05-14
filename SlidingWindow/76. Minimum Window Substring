@@ -1,0 +1,24 @@
+import collections
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        tc = collections.Counter(t)
+        remains = sum(tc.values())
+        best = float('inf')
+        out = ""
+        start = 0
+        for idx,c in enumerate(s):
+            if c in tc:
+                if tc[c] > 0:
+                    remains -= 1
+                tc[c] -= 1
+            while remains == 0:
+                if idx-start+1 < best:
+                    best = idx-start+1
+                    out = s[start:idx+1]
+                if s[start] in tc:
+                    tc[s[start]] += 1
+                if tc[s[start]] > 0:
+                    remains += 1
+                start += 1
+        return out

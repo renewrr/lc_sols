@@ -1,0 +1,16 @@
+import collections
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counts = collections.Counter(nums)
+        freq = {}
+        for c in counts:
+            if counts[c] not in freq:
+                freq[counts[c]] = []
+            freq[counts[c]].append(c)
+        out = []
+        for f in range(len(nums),-1,-1):
+            if f in freq:
+                out = out + freq[f]
+            if len(out) >= k:
+                break
+        return out[:k]

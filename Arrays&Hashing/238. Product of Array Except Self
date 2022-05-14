@@ -1,0 +1,10 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        left_half,right_half = 1,1
+        products = [1]*len(nums)
+        for i in range(len(nums)):
+            products[i] *= left_half
+            products[len(nums)-1-i] *= right_half
+            left_half *= nums[i]
+            right_half *= nums[len(nums)-1-i]
+        return products

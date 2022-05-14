@@ -1,0 +1,20 @@
+import collections
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        poss = collections.defaultdict(int)
+        out = []
+        for n in nums:
+            poss[n] += 1
+        for k1 in poss:
+            for k2 in poss:
+                if(k1 > k2):continue
+                if(k1 == k2 and poss[k1] < 2):continue
+                need,key = 1,0-k1-k2
+                if(k2 > key):continue
+                if(key in poss):
+                    if(key == k1):need += 1
+                    if(key == k2):need += 1
+                    if(poss[key] < need):continue
+                    out.append([k1,k2,key])
+        return out

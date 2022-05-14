@@ -1,0 +1,13 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lookup,start,best = {},0,0
+        for idx,c in enumerate(s):
+            if c not in lookup or lookup[c] == -1:
+                lookup[c] = idx
+                best = max(best,idx-start+1)
+            else:
+                for i in range(start,lookup[c]):
+                    lookup[s[i]] = -1
+                start = lookup[c]+1 
+                lookup[c] = idx
+        return best
