@@ -1,0 +1,37 @@
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        trie = {'end':False}
+        for word in words:
+            curr = trie
+            for c in word:
+                if c not in curr:
+                    curr[c] = {'end':False,'count':0}
+                curr = curr[c]
+                curr['count'] += 1
+            curr['end'] = word
+        out = []
+        dxy = ((1,0),(0,1),(-1,0),(0,-1))
+        M,N = len(board),len(board[0])
+        words = set(words)
+        def traverse(x,y,curr):
+            ends = 0
+            if curr['end'] is not False:
+                out.append(curr['end'])
+                curr['end'] = False
+                ends+=1
+            for dx,dy in dxy:
+                x2,y2 = x+dx,y+dy
+                if M > y2 >= 0 and N > x2 >= 0 and (x2,y2) not in seen:
+                    seen.add((x2,y2))
+                    if board[y2][x2] in curr and curr[board[y2][x2]]['count'] > 0:
+                        ends += traverse(x2,y2,curr[board[y2][x2]])
+                    seen.remove((x2,y2))
+            curr['count'] -= ends
+            return ends
+        for y in range(M):
+            for x in range(N):
+                if board[y][x] in trie:
+                    seen = set()
+                    seen.add((x,y))
+                    traverse(x,y,trie[board[y][x]])
+        return out

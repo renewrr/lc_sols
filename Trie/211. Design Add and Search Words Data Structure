@@ -1,0 +1,15 @@
+import collections
+
+class WordDictionary:
+    def __init__(self):
+        self.word_dict = collections.defaultdict(list)
+    def addWord(self, word: str) -> None:
+        self.word_dict[len(word)].append(word)
+    def search(self, word: str) -> bool:
+        for key in self.word_dict[len(word)]:
+            index = 0
+            while word[index] == '.' or word[index] == key[index]:
+                index += 1
+                if(index == len(word)):
+                    return True
+        return False
