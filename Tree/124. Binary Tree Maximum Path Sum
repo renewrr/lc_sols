@@ -1,0 +1,23 @@
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        global best
+        best = float('-inf')
+        @cache
+        def get_best(node):
+            curr_best = node.val
+            global best
+            l_best,r_best = None,None
+            if node.left:
+                l_best = get_best(node.left)
+            if node.right:
+                r_best = get_best(node.right)
+            if l_best and r_best:
+                best = max(best,l_best+node.val+r_best)
+            if l_best:
+                curr_best = max(curr_best,node.val+l_best)
+            if r_best:
+                curr_best = max(curr_best,node.val+r_best)
+            best = max(best,curr_best)
+            return curr_best
+        get_best(root)
+        return best
