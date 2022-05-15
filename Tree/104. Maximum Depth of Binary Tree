@@ -1,0 +1,11 @@
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if(not root):return 0
+        pend,count = [root],0
+        while pend:
+            new_pend = []
+            for p in pend:
+                if(p.left):new_pend.append(p.left)
+                if(p.right):new_pend.append(p.right)
+            pend,count = new_pend,count+1
+        return count

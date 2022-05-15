@@ -1,0 +1,16 @@
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        heap = []
+        for idx,node in enumerate(lists):
+            if(node):heap.append([node.val,idx])
+        heapq.heapify(heap)
+        dummy = ListNode(val = -10001)
+        curr = dummy
+        while heap:
+            node_val,idx = heappop(heap)
+            curr.next = lists[idx]
+            lists[idx] = lists[idx].next
+            if(lists[idx]):
+                heapq.heappush(heap,[lists[idx].val,idx])
+            curr = curr.next
+        return dummy.next

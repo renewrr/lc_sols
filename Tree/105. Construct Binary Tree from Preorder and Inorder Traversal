@@ -1,0 +1,21 @@
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        root = TreeNode(val = preorder[0])
+        if(not inorder):
+            return None
+        if(len(inorder) == 1):
+            return root
+        rv = preorder[0]
+        rootat = inorder.index(rv)
+        rightat = rootat-1
+        if(rootat) > 0:
+            ltr = self.buildTree(preorder[1:rootat+1],inorder[0:rootat])
+        else:
+            ltr = None
+        if(rootat+1 == len(inorder)):
+            rtr = None
+        else:
+            rtr = self.buildTree(preorder[rootat+1:],inorder[rootat+1:])
+        root.left = ltr
+        root.right = rtr
+        return root

@@ -1,0 +1,17 @@
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        def ks(node,k):
+            if not node:
+                return 0,None
+            ltree_total,cand = ks(node.left,k)
+            if cand is not None:
+                return -1,cand
+            k -= ltree_total
+            if k == 1:
+                return -1,node
+            rtree_total,cand = ks(node.right,k-1)
+            if cand is not None:
+                return -1,cand
+            return ltree_total+rtree_total+1,None
+        _,node = ks(root,k)
+        return node.val
