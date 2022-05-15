@@ -1,0 +1,22 @@
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:return None
+        seen = {}
+        done = set((node.val,))
+        root = node.val
+        pending = [node]
+        while pending:
+            new_pending = []
+            for n in pending:
+                if n.val not in seen:
+                    seen[n.val] = Node(val=n.val)
+                curr = seen[n.val]
+                for neigh in n.neighbors:
+                    if neigh.val not in seen:
+                        seen[neigh.val] = Node(val=neigh.val)
+                    if neigh.val not in done:
+                        done.add(neigh.val)
+                        new_pending.append(neigh)
+                    curr.neighbors.append(seen[neigh.val])
+            pending = new_pending
+        return seen[root]

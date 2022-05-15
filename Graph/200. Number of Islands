@@ -1,0 +1,16 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        def traverse(x,y):
+            for dx,dy in [[1,0],[0,1],[-1,0],[0,-1]]:
+                x2,y2 = dx+x,dy+y
+                if M > y2 >= 0 and N > x2 >= 0 and grid[y2][x2] == '1':
+                    grid[y2][x2] = '2'
+                    traverse(x2,y2)
+        count = 0
+        M,N = len(grid),len(grid[0])
+        for y in range(M):
+            for x in range(N):
+                if grid[y][x] == '1':
+                    count += 1
+                    traverse(x,y)
+        return count

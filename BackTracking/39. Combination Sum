@@ -1,0 +1,15 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
+        def find_comb(idx,remains):
+            out = []
+            for shift,cand in enumerate(candidates[idx:]):
+                if cand > remains:
+                    break
+                if cand == remains:
+                    out.append([cand])
+                    break
+                for path in find_comb(idx+shift,remains-cand):
+                    out.append([cand]+path)
+            return out
+        return find_comb(0,target)

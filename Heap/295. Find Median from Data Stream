@@ -1,0 +1,21 @@
+from heapq import heappop,heappush
+
+class MedianFinder:
+
+    def __init__(self):
+        self.lefthalf,self.righthalf = [],[]
+        
+    def addNum(self, num: int) -> None:
+        if not self.righthalf or num < self.righthalf[0]:
+            heappush(self.lefthalf,-num)
+        else:
+            heappush(self.righthalf,num)
+        if(len(self.righthalf) > len(self.lefthalf)):
+            heappush(self.lefthalf,-heappop(self.righthalf))
+        elif len(self.lefthalf)-len(self.righthalf) > 1:
+            heappush(self.righthalf,-heappop(self.lefthalf))
+    def findMedian(self) -> float:
+        if len(self.lefthalf) > len(self.righthalf):
+            return -self.lefthalf[0]
+        else:
+            return ((-self.lefthalf[0])+self.righthalf[0])/2

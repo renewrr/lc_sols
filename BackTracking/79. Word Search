@@ -1,0 +1,22 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        dxy,N,M = [[1,0],[-1,0],[0,1],[0,-1]],len(board[0]),len(board) 
+        def find_path(x,y,idx):
+            if idx == len(word):
+                return True
+            for dx,dy in dxy:
+                x2,y2 = x+dx,y+dy
+                if (x2,y2) in seen:continue
+                if N > x2 >= 0 and M > y2 >= 0 and board[y2][x2] == word[idx]:
+                    seen.add((x2,y2))
+                    if find_path(x2,y2,idx+1):
+                        return True
+                    seen.remove((x2,y2))
+            return False
+        for y,row in enumerate(board):
+            for x,cell in enumerate(row):
+                if cell == word[0]:
+                    seen = set(((x,y),))
+                    if find_path(x,y,1):
+                        return True
+        return False
