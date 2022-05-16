@@ -1,0 +1,21 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        adj_list = {}
+        for i in range(numCourses):
+            adj_list[i] = [[],0]
+        for to,fro in prerequisites:
+            adj_list[to][1] += 1
+            adj_list[fro][0].append(to)
+        start = []
+        for course in adj_list:
+            if(adj_list[course][1] == 0):
+                start.append(course)
+        completed_courses = 0
+        while start:
+            course = start.pop()
+            completed_courses += 1
+            for to in adj_list[course][0]:
+                adj_list[to][1] -= 1
+                if(adj_list[to][1] == 0):
+                    start.append(to)
+        return (completed_courses == numCourses)

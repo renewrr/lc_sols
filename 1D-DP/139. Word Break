@@ -1,0 +1,15 @@
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        longest = max([len(word) for word in words])
+        lookup = {len(s):True}
+        def check_break(idx):
+            if idx in lookup:
+                return lookup[idx]
+            for k in range(idx+1,min(idx+longest+1,len(s)+1)):
+                if s[idx:k] in words and check_break(k):
+                    lookup[idx] = True
+                    return True
+            lookup[idx] = False
+            return False
+        return check_break(0)

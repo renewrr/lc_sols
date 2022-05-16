@@ -1,0 +1,23 @@
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        M,N = len(heights),len(heights[0])
+        ans_grid = [[0]*N for _ in range(M)]
+        out = []
+        def traverse(x,y,mode):
+            if mode == 2 and ans_grid[y][x] == 1:
+                out.append([y,x])
+            ans_grid[y][x] = mode
+            for dx,dy in [[1,0],[0,1],[-1,0],[0,-1]]:
+                x2,y2 = x+dx,y+dy
+                if M > y2 >= 0 and N > x2 >= 0:
+                    if ans_grid[y2][x2] != mode and heights[y2][x2] >= heights[y][x]:
+                        traverse(x2,y2,mode)
+        for x in range(N):
+            traverse(x,0,1)
+        for y in range(M):
+            traverse(0,y,1)
+        for x in range(N):
+            traverse(x,M-1,2)
+        for y in range(M):
+            traverse(N-1,y,2)
+        return out

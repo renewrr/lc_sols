@@ -1,0 +1,17 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        coins.sort()
+        lookup = {c:1 for c in coins}
+        lookup[0] = 0
+        def getCount(remains):
+            if remains in lookup:return lookup[remains]
+            best = float('inf')
+            for c in coins:
+                if c > remains:break
+                tmp = getCount(remains-c)
+                if tmp == -1:continue
+                best = min(best,tmp+1)
+            if best == float('inf'):lookup[remains] = -1
+            else: lookup[remains] = best
+            return lookup[remains]
+        return getCount(amount)

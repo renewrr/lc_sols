@@ -1,0 +1,6 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        rob_prev,pass_prev = 0,0
+        for n in nums:
+            rob_prev,pass_prev = pass_prev+n,max(rob_prev,pass_prev)
+        return max(rob_prev,pass_prev)

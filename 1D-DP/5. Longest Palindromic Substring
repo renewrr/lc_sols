@@ -1,0 +1,23 @@
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def checkPali(left,right):
+            while True:
+                if(left-1 < 0 or right+1 >= N or s[left-1] != s[right+1]):
+                    break
+                left-=1
+                right+=1
+            return left,right
+        N = len(s)
+        idx = 0
+        best,best_l,best_r = 0,0,0
+        while idx < N:
+            start = idx
+            while idx+1 < N and s[idx+1] == s[start]:
+                idx+=1
+            end = idx
+            start,end = checkPali(start,end)
+            if end-start+1 > best:
+                best = end-start+1
+                best_l,best_r = start,end
+            idx += 1
+        return s[best_l:best_r+1]

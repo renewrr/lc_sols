@@ -1,0 +1,17 @@
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        N = len(s)
+        lookup = {N:1,N-1:1}
+        if s[-1] == '0':
+            lookup[N-1] = 0
+        def decode(idx):
+            if idx in lookup:
+                return lookup[idx]
+            poss = 0
+            if s[idx] != '0':
+                poss += decode(idx+1)
+                if 26 >= int(s[idx:idx+2]) > 0:
+                    poss += decode(idx+2)
+            lookup[idx] = poss
+            return poss
+        return decode(0)

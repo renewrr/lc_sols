@@ -1,0 +1,13 @@
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        lookup = {}
+        def longest(prev):
+            if prev in lookup:
+                return lookup[prev]
+            best = 0
+            for idx in range(prev+1,len(nums)):
+                if nums[idx] > nums[prev]:
+                    best = max(best,1+longest(idx))
+            lookup[prev] = best
+            return best
+        return max([1+longest(i) for i in range(len(nums))])
