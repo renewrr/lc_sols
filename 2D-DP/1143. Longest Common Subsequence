@@ -1,0 +1,13 @@
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        lookup = {}
+        def find_sub(idx1,idx2):
+            if (idx1,idx2) not in lookup:
+                if idx1 < 0 or idx2 < 0:
+                    return 0
+                if text1[idx1] == text2[idx2]:
+                    lookup[(idx1,idx2)] = find_sub(idx1-1,idx2-1)+1
+                else:
+                    lookup[(idx1,idx2)] = max(find_sub(idx1,idx2-1),find_sub(idx1-1,idx2))
+            return lookup[(idx1,idx2)]
+        return find_sub(len(text1)-1,len(text2)-1)
