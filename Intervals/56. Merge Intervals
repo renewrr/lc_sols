@@ -1,0 +1,14 @@
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort(key = lambda x:x[0])
+        outs = []
+        for start,end in intervals:
+            while outs:
+                if(outs[-1][1] >= start):
+                    start = outs[-1][0]
+                    end = max(end,outs[-1][1])
+                    outs.pop()
+                else:
+                    break
+            outs.append([start,end])
+        return outs

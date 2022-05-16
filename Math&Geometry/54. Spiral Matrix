@@ -1,0 +1,19 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        N,M = len(matrix[0]),len(matrix)
+        lower_x,lower_y = 0,0
+        out = []
+        x,y = 0,0
+        dxy = [[1,0],[0,1],[-1,0],[0,-1]]
+        dMN = [[0,1,0,0],[0,0,-1,0],[0,0,0,-1],[1,0,0,0]]
+        d_idx = 0
+        for _ in range(N*M):
+            out.append(matrix[y][x])
+            dx,dy = dxy[d_idx]
+            if x+dx < lower_x or x+dx >= N or y+dy < lower_y or y+dy >= M:
+                dlx,dly,dN,dM = dMN[d_idx]
+                lower_x,lower_y,N,M = lower_x+dlx,lower_y+dly,N+dN,M+dM 
+                d_idx = (d_idx+1)%4
+                dx,dy = dxy[d_idx]
+            x,y = x+dx,y+dy
+        return out

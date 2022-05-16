@@ -1,0 +1,8 @@
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        curr = 0
+        for n in nums:
+            curr = curr ^ n
+        for i in range(len(nums)+1):
+            curr = curr ^ i
+        return curr

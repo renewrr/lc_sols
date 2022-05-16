@@ -1,0 +1,14 @@
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        set_x,set_y = set(),set()
+        M,N = len(matrix),len(matrix[0])
+        for y,row in enumerate(matrix):
+            for x,cell in enumerate(row):
+                if cell == 0:
+                    set_x.add(x)
+                    set_y.add(y)
+        for y in set_y:
+            matrix[y] = [0]*N
+        for row in matrix:
+            for x in set_x:
+                row[x] = 0

@@ -1,0 +1,10 @@
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key = lambda x:x[1])
+        curr_end,del_count = -50001,0
+        for start,end in intervals:
+            if(start >= curr_end):
+                curr_end = end
+            else:
+                del_count += 1
+        return del_count

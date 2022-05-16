@@ -1,0 +1,31 @@
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        mask = 1
+        carry = 0
+        out = 0
+        neg = False
+        if(a < 0 and b < 0):
+            neg = True
+            a = -a
+            b = -b
+        elif(a < 0):
+            if (-a > b):
+                neg = True
+                b = -b
+                a = -a
+        elif(b < 0):
+            if (-b > a):
+                neg = True
+                b = -b
+                a = -a
+        for i in range(11):
+            bit_a = mask&a
+            bit_b = mask&b
+            remainder = (bit_a^bit_b)^carry
+            carry = (bit_a|bit_b)&(bit_b|carry)&(carry|bit_a)
+            out |= remainder
+            mask = mask<<1
+            carry = carry<<1
+        if(neg):
+            return -out
+        return out

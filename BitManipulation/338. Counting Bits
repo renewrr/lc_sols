@@ -1,0 +1,6 @@
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        out = [0,1]
+        while len(out) < n+1:
+            out = out + [o+1 for o in out]
+        return out[:n+1]
