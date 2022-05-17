@@ -1,0 +1,13 @@
+class Solution:
+    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        if not original:
+            return None
+        if original is target:
+            return cloned
+        l_node = self.getTargetCopy(original.left,cloned.left,target)
+        if l_node:
+            return l_node
+        r_node = self.getTargetCopy(original.right,cloned.right,target)
+        if r_node:
+            return r_node
+        return None
