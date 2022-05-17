@@ -1,0 +1,14 @@
+import collections
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        window = collections.deque()
+        out = []
+        for idx,n in enumerate(nums):
+            while window and window[-1][0] <= n:
+                window.pop()
+            window.append([n,idx])
+            while idx-window[0][1]+1 > k:
+                window.popleft()
+            out.append(window[0][0])
+        return out[k-1:]

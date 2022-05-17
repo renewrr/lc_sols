@@ -1,0 +1,15 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        right_max = []
+        prev = -1
+        N = len(height)
+        for i in range(N):
+            right_max.append(prev)
+            prev = max(height[N-1-i],prev)
+        right_max = right_max[::-1]
+        left_max = -1
+        total = 0
+        for i in range(N):
+            total += max(min(left_max,right_max[i])-height[i],0)
+            left_max = max(left_max,height[i])
+        return total

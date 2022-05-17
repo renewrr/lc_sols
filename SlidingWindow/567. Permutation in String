@@ -1,0 +1,15 @@
+import collections
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s2) < len(s1):return False
+        N = len(s1)
+        count1,count2 = collections.Counter(s1),collections.Counter(s2[:N])
+        if count1 == count2:
+            return True
+        for idx,c in enumerate(s2[N:]):
+            count2[c] += 1
+            count2[s2[idx]] -= 1
+            if count1 == count2:
+                return True
+        return False
