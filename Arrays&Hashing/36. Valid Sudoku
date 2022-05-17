@@ -1,0 +1,12 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        boxes,rows,cols = [[set() for i in range(3)] for j in range(3)],[set() for i in range(9)],[set() for i in range(9)]
+        for y,row in enumerate(board):
+            for x,cell in enumerate(row):
+                if cell != '.':
+                    if cell in rows[y] or cell in cols[x] or cell in boxes[y//3][x//3]:
+                        return False
+                    rows[y].add(cell)
+                    cols[x].add(cell)
+                    boxes[y//3][x//3].add(cell)
+        return True
