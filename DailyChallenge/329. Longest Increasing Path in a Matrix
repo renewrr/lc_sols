@@ -1,0 +1,19 @@
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        M,N = len(matrix),len(matrix[0])
+        lookup = [[-1 for i in range(N)] for j in range(M)]
+        dxy = [[1,0],[0,1],[-1,0],[0,-1]]
+        def getPath(x,y):
+            if lookup[y][x] > 0:return lookup[y][x]
+            best = 1
+            for dx,dy in dxy:
+                x2,y2 = x+dx,y+dy
+                if N > x2 >= 0 and M > y2 >= 0 and matrix[y2][x2] > matrix[y][x]:
+                    best = max(best,1+getPath(x2,y2))
+            lookup[y][x] = best
+            return best
+        global_best = 0
+        for y in range(M):
+            for x in range(N):
+                global_best = max(global_best,getPath(x,y))
+        return global_best
