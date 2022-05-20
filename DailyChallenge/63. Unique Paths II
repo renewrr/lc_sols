@@ -1,0 +1,13 @@
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        N,M = len(obstacleGrid[0]),len(obstacleGrid)
+        if obstacleGrid[0][0] == 1 or obstacleGrid[M-1][N-1] == 1:
+            return 0
+        path_count = {(N-1,M-1):1}
+        def get_count(x,y):
+            if x == N or y == M or obstacleGrid[y][x] == 1:
+                return 0
+            if (x,y) not in path_count:
+                path_count[(x,y)] = get_count(x+1,y) + get_count(x,y+1)
+            return path_count[(x,y)]
+        return get_count(0,0)
