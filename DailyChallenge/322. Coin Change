@@ -1,0 +1,23 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0:
+            return 0
+        coins.sort()
+        seen = set()
+        front = [0]
+        steps = 1
+        while front:
+            new_front = []
+            for poss in front:
+                for c in coins:
+                    if c+poss > amount:
+                        break
+                    if c+poss in seen:
+                        continue
+                    if c+poss == amount:
+                        return steps
+                    new_front.append(c+poss)
+                    seen.add(c+poss)
+            front = new_front
+            steps+=1
+        return -1
