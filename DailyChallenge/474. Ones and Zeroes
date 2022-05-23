@@ -1,0 +1,13 @@
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        @cache
+        def find_max(idx,zeros,ones):
+            if idx == len(strs):
+                return 0
+            c = Counter(strs[idx])
+            dm,dn = c['0'],c['1']
+            best = find_max(idx+1,zeros,ones)
+            if dm <= zeros and dn <= ones:
+                best = max(best,find_max(idx+1,zeros-dm,ones-dn)+1)
+            return best
+        return find_max(0,m,n)
