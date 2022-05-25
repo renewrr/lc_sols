@@ -1,0 +1,20 @@
+import collections
+
+class Solution:
+    def maxEnvelopes(self, envelopes: List[List[int]]) -> int: 
+        widths = collections.defaultdict(list)
+        for w,h in envelopes:
+            widths[w].append(h)
+        for w in widths:
+            widths[w].sort(reverse=True)
+        best_sub = []
+        for w in sorted(widths):
+            pending = {}
+            for h in widths[w]:
+                pending[bisect_left(best_sub,h)] = h
+            for pos in pending:
+                if pos == len(best_sub):
+                    best_sub.append(pending[pos])
+                else:
+                    best_sub[pos] = pending[pos]
+        return len(best_sub)
